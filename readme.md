@@ -90,6 +90,18 @@ name:
   apt:
     name: apache2
 ```
+To get the list of your tags use this command:
+```bash
+ansible-playbook --list-tags playbook-name.yml
+```
+To target tasks with only tag with apache:
+```bash
+ansible-playbook --tags apache playbook-name.yml
+```
+To target multiple tags use
+```bash
+ansible-playbook --tags "apache,php" playbook-name.yml
+```
 
 if your server username is not the same with your local machine username, then the inventory should look like this.
 
@@ -97,4 +109,3 @@ if your server username is not the same with your local machine username, then t
 [all]
 173.230.141.217 ansible_user=root
 ```
-
