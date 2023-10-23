@@ -109,3 +109,13 @@ if your server username is not the same with your local machine username, then t
 [all]
 173.230.141.217 ansible_user=root
 ```
+## File Management
+```bash
+- name: copy file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+```
