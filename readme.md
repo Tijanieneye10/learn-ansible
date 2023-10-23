@@ -66,6 +66,7 @@ Go to your inventory file and add the variables there
 Instead of using apt, you can use "package" this will use a compatible package of the linux distribution.
 
 ## Target Nodes in Inventory file
+
 [web_server]
 192.172.80.122
 
@@ -73,6 +74,7 @@ Instead of using apt, you can use "package" this will use a compatible package o
 172.892.54.172
 
 To use this on the playbook
+
 ```yaml
 name:
   apt:
@@ -84,21 +86,28 @@ name:
 pre_tasks is used when you want that tasks to be run before others.
 
 ## Tags
+
 ```bash
 name:
   tag: apache,centos
   apt:
     name: apache2
 ```
+
 To get the list of your tags use this command:
+
 ```bash
 ansible-playbook --list-tags playbook-name.yml
 ```
+
 To target tasks with only tag with apache:
+
 ```bash
 ansible-playbook --tags apache playbook-name.yml
 ```
+
 To target multiple tags use
+
 ```bash
 ansible-playbook --tags "apache,php" playbook-name.yml
 ```
@@ -109,7 +118,9 @@ if your server username is not the same with your local machine username, then t
 [all]
 173.230.141.217 ansible_user=root
 ```
+
 ## File Management
+
 ```bash
 - name: copy file
       copy:
@@ -119,3 +130,34 @@ if your server username is not the same with your local machine username, then t
         group: root
         mode: 0644
 ```
+
+## Manage Services
+
+```bash
+- name: manage state
+  tag: start apache
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+```
+## Restart a service
+
+```bash
+lineinfile:
+  path: /var/www/html
+  regexp: '^Serveradmin'
+  line:  Serveradmin learn@ansible
+  register: apache2
+```
+
+```bash
+- name: restart service
+  service: 
+    name: httpd
+    state: restarted
+  when: httpd.changed
+```
+
+
+here you specify path, what to look for, and what it should be replace.
