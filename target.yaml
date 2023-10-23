@@ -1,0 +1,11 @@
+---
+- host: web_server
+  become: true
+  pre_tasks:
+    - name: install apache
+      apt:
+        upgrade: dist
+        update_cache: yes
+        name:
+          - apache2
+          - php

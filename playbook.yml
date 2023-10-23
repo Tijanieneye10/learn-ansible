@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install apache2
+      apt:
+        name: apache2
+        state: latest
+      when: ansible_distribution == "ubuntu"
+    - name: install php
+      apt:
+        name: php8.1
+        state: latest
+      when: ansible_distribution == "ubuntu"
+    - name: Install multiple tools
+      apt:
+        name:
+          - nginx
+          - php
+          - composer
+          - mysql
+        state: latest
+        update_cache: yes
