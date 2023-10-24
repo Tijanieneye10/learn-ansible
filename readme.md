@@ -159,5 +159,30 @@ lineinfile:
   when: httpd.changed
 ```
 
-
 here you specify path, what to look for, and what it should be replace.
+
+## Manage users
+```bash
+- name: Create user
+  change_when: false
+  tags: user
+  user:
+    name: brainy
+    group: root
+```
+Assign authorized key to user
+```bash
+- name: assign authorized key
+  authorized_key:
+    user: brainy
+    key: "ssh public key"
+```
+
+To make user a sudoer with a file
+```bash
+- name: Make user a sudoer
+  copy:
+    src: sudoer_brainy
+    dest: /etc/sudoers.d/brainy
+    owner: root
+    group: root

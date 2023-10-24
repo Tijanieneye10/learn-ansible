@@ -1,0 +1,35 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+    - name: install apache
+      apt:
+        update_cache: yes
+        name: apache2
+        state: latest
+
+    - name: copy file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: create user
+      user:
+        name: brainy
+        groups: root
+
+    - name: make user sudoer
+      copy:
+        src: sudoer_brainy
+        dest: /etc/sudoers.d/brainy
+        owner: root
+        group: root
+
+    - name: authorized key
+      authorized_key:
+        user: brainy
+        key: "public key"
